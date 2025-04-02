@@ -1,18 +1,16 @@
-const express = require('express');
-const app= express();
-const cors = require("cors");
-const itemRoute = require("./routes/itemRoute");
-
-// .env file is used to store environment variables
-const dotenv = require("dotenv");
+const express= require('express');
+const dotenv= require('dotenv');
 dotenv.config();
-const ConnectDB = require("./database/config/db");
+const ConnectDB= require('./database/config/db');
 ConnectDB();
-const PORT = process.env.PORT;
-
-app.use(cors());
+const port=process.env.PORT || 3000;
+const app= express();
 app.use(express.json());
-app.use("/api/items1", itemRoute);
-app.listen(PORT,()=>{
-    console.log(`Server is running on port ${PORT}`)
+const userRoute= require('./routes/userRoute');
+app.use('/user',userRoute);
+
+
+app.use(express.json());
+app.listen(port,()=>{
+    console.log("Server is running on port",port);
 })
